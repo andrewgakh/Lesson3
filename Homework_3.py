@@ -36,72 +36,179 @@ list_text=['Все счастливые семьи похожи друг на д
 # 1) Методами строк очистить текст от знаков препинания.
 # **************************************************************************************************************
 
-# # Счетчик строк в тексте(списке)
-# str_txt=0
-#
-# # Перебираем строки из списка
-# while str_txt < len(list_text):
-#         str=list_text[str_txt]
-#         print('Номер строки текста(списка)', str_txt)
-#         print('Исходная строка: ')
-#         print(str)
-#
-#         str_form = str
-#
-#         count = str_form.count(',')
-#         str_form = str_form.replace(',', '', count)
-#
-#         count = str_form.count('.')
-#         str_form = str_form.replace('.', '', count)
-#
-#         count = str_form.count('-')
-#         str_form = str_form.replace('-', '', count)
-#
-#         count = str_form.count('«')
-#         str_form = str_form.replace('«', '', count)
-#
-#         count = str_form.count('»')
-#         str_form = str_form.replace('»', '', count)
-#
-#         count = str_form.count('!')
-#         str_form = str_form.replace('!', '', count)
-#
-#         count = str_form.count('?')
-#         str_form = str_form.replace('?', '', count)
-#
-#         count = str_form.count(';')
-#         str_form = str_form.replace(';', '', count)
-#
-#         count = str_form.count(':')
-#         str_form = str_form.replace(':', '', count)
-#
-#         count = str_form.count('—')
-#         str_form = str_form.replace('—', '', count)
-#
-#         print()
-#         print('Строка без знаков препинания:')
-#         print(str_form)
-#
-#         print()
-#         str_txt+=1
+# Счетчик строк в тексте(списке)
+str_txt=0
+list_words=[]
+list_tmp=[]
+print('Задача 1. ')
 
+# Перебираем строки из списка
+while str_txt < len(list_text):
+        str_1 = list_text[str_txt]
+        print('Номер строки текста(списка)', str_txt)
+        print('Исходная строка: ')
+        print(str_1)
+
+        str_form = str_1
+
+        count = str_form.count(',')
+        str_form = str_form.replace(',', '', count)
+
+        count = str_form.count('.')
+        str_form = str_form.replace('.', '', count)
+
+        count = str_form.count('-')
+        str_form = str_form.replace('-', '', count)
+
+        count = str_form.count('«')
+        str_form = str_form.replace('«', '', count)
+
+        count = str_form.count('»')
+        str_form = str_form.replace('»', '', count)
+
+        count = str_form.count('!')
+        str_form = str_form.replace('!', '', count)
+
+        count = str_form.count('?')
+        str_form = str_form.replace('?', '', count)
+
+        count = str_form.count(';')
+        str_form = str_form.replace(';', '', count)
+
+        count = str_form.count(':')
+        str_form = str_form.replace(':', '', count)
+
+        count = str_form.count('—')
+        str_form = str_form.replace('—', '', count)
+
+        print()
+        print('Строка без знаков препинания:')
+        print(str_form)
+
+# **************************************************************************************************************
+# 2) сформировать list со словами (split);
+# **************************************************************************************************************
+        list_tmp = str_form.split()
+        list_words = list_words + list_tmp
+        print()
+        str_txt+=1
+
+print('Задача 2. ')
+print('Список слов, list_word, сформированный из исходного текста.')
+print(list_words)
 
 # **************************************************************************************************************
 # 2) сформировать list со словами (split);
 # **************************************************************************************************************
 
+# # Счетчик строк в тексте(списке), инициализируем новый список слов
+# str_txt=0
+# list_words=[]
+# list_tmp=[]
+#
+# # Перебираем строки из списка
+# while str_txt < len(list_text):
+#
+#         str = list_text[str_txt]
+#         list_tmp = str.split()
+#         list_words = list_words + list_tmp
+#
+#         str_txt+=1
+# print()
+# print('Список слов, list_word, сформированный из исходного текста.')
+# print()
+# print(list_words)
+
 # **************************************************************************************************************
 # 3) привести все слова к нижнему регистру (map);
 # **************************************************************************************************************
+print()
+print('Задача 3 часть 1.')
 
+# Приводим все слова к нижнему регистру
+small_words = list (map (str.lower, list_words))
+
+print('Новый список со словами приведеными к нижнему регистру:')
+print(small_words)
+
+print()
+print('Задача 5.')
+small_words3=[]
+import pymorphy2
+morph = pymorphy2.MorphAnalyzer()
+
+for i in range(len(small_words)):
+    p = list (morph.parse(small_words[i])[0])
+    small_words3.append(p[2])
+print('Результат лемматизации списка из задачи 3 часть 1.')
+print(small_words3)
 # **************************************************************************************************************
 # 3) получить из list пункта 3 dict, ключами которого являются слова, а значениями их количество появлений в тексте;
 # **************************************************************************************************************
+print()
+print('Задача 3 часть 2.')
+
+small_words1 = small_words
+
+j = 0
+i = 0
+kol = 1
+dict_words = {}
+dlina= len(small_words1)
+
+while i < (len(small_words1)-1):
+
+    if (i) < len(small_words1) and small_words1[i] == '':
+         i = i + 1
+    else: i=i +0
+
+    j = i + 1
+    while j < len(small_words1):
+        if small_words1[i] == small_words1[j]:
+            kol += 1
+            small_words1[j] = ''
+        j += 1
+    dict_words[small_words1[i]] = kol
+    kol = 1
+    i = i + 1
+
+print()
+print(small_words1)
+print(dict_words)
+print()
 
 # **************************************************************************************************************
 # 4) вывести 5 наиболее часто встречающихся слов (sort), вывести количество разных слов в тексте (set).
 # **************************************************************************************************************
+print('Задача 4.')
+print('Пять наиболее встречающихся слов в словаре: ')
+# Определяем 5(пять) наиболее часто встречающихся слов
+list_d = list(dict_words.items())
+ii=0
+
+list_d.sort( key =lambda i: i[1],reverse= True)
+
+for i in list_d:
+    if ii<5:
+        print(i[0], ':', i[1])
+    else: break
+    ii+=1
+
+# Определяем к-во разных слов в тексте.
+set_words=set(small_words1)
+
+print()
+print('Количество разных слов в тексте равно: ', len(set_words)+1)
 
 # **************************************************************************************************************
 # 5) выполнить light с условием: в пункте 2 дополнительно к приведению к нижнему регистру выполнить лемматизацию.
 # **************************************************************************************************************
+# print('Задача 5.')
+# small_words3=[]
+# import pymorphy2
+# morph = pymorphy2.MorphAnalyzer()
+#
+# for i in range(len(small_words1)):
+#     p = list (morph.parse(small_words1[i])[0])
+#     small_words3.append(p[2])
+# print(small_words3)
